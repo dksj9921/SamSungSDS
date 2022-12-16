@@ -3,10 +3,7 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Test1 {
 
@@ -16,28 +13,35 @@ public class Test1 {
         StringTokenizer st = new StringTokenizer(bf.readLine());
         int T = Integer.parseInt(st.nextToken());
 
-        ArrayList<Node>arr[];
+        ArrayList<Node>arr = new ArrayList<>();
 
 
 
         for (int repeat = 0; repeat < T; repeat++) {
             int N = Integer.parseInt(bf.readLine());
-            arr = new ArrayList[N];
-
-
             st = new StringTokenizer(bf.readLine());
+            int tempArr[] = new int[N];
+
             for(int i = 0; i<N; i++){
                 int temp =  Integer.parseInt(st.nextToken());
-                arr[temp] = new ArrayList<>();
+                arr.add(new Node(i,temp));
             }
             for(int i = 0; i<N;i++){
                 for(int k = 1+i; k<N;k++){
-//                    if(isSquareNumber(arr[i]+arr[k])){
-
-//                    }
+                    if(isSquareNumber(arr.get(i).value+arr.get(k).value)){
+                        arr[i].add(new Node(k,arr[k]));
+                        arr[tempArr[k]].add(new Node(i,tempArr[i]));pp99
+                    }
                 }
             }
 
+            Stack<Integer>stack = new Stack<>();
+            for(int i = 0; i<N;i++){
+                stack.push(i);
+                if(!arr[tempArr[i]].isEmpty()){
+                    Node k = arr[tempArr[i]].get(0);
+                }
+            }
         }
     }
 
@@ -54,10 +58,15 @@ public class Test1 {
     public static class Node{
         int index;
         int value;
+        ArrayList<Node>nearNodeArr = new ArrayList<>();
 
         public Node(int index,int value){
             this.index = index;
             this.value = value;
+        }
+
+        public void inputArr(int index, int value){
+            this.nearNodeArr.add(new Node(index,value));
         }
     }
 
